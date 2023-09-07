@@ -11,10 +11,11 @@ library(gganimate) # to make a temporal gif of climate variation
 library(rcontroll) # to generate TROLL climate inputs
 
 ## ----message=TRUE, warning=TRUE, include=FALSE--------------------------------
-if(Sys.info()[['sysname']] == "Darwin")
+if (Sys.info()[["sysname"]] == "Darwin") {
   knitr::opts_chunk$set(
     eval = FALSE
   )
+}
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  library(ecmwfr) # to request data from Copernicus
@@ -25,9 +26,11 @@ if(Sys.info()[['sysname']] == "Darwin")
 #  library(sf) # to extract coordinates from spatial objects
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  wf_set_key(user = "******",
-#             key = "********-****-****-****-************",
-#             service = "cds")
+#  wf_set_key(
+#    user = "******",
+#    key = "********-****-****-****-************",
+#    service = "cds"
+#  )
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  getbb("French Guiana", format_out = "sf_polygon", limit = 1)$multipolygon %>%
@@ -37,7 +40,8 @@ if(Sys.info()[['sysname']] == "Darwin")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  (coords <- gsub(",", "/", getbb("French Guiana",
-#                                  format_out = "string", limit = 1)))
+#    format_out = "string", limit = 1
+#  )))
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  request <- list(
@@ -100,17 +104,22 @@ if(Sys.info()[['sysname']] == "Darwin")
 #  )
 
 ## -----------------------------------------------------------------------------
-test_r <- suppressWarnings(rast(system.file("extdata", "ERA5land_mth_Nouragues_2021_2022.nc", package = "rcontroll")))
+test_r <- suppressWarnings(rast(
+  system.file("extdata",
+    "ERA5land_mth_Nouragues_2021_2022.nc",
+    package = "rcontroll"
+  )
+))
 test <- suppressWarnings(as.data.frame(test_r, xy = TRUE)) %>%
-  gather("variable", "value", -x, -y) %>% 
-  group_by(x,y) %>% 
-  mutate(date = rep(as_date(terra::time(test_r)))) %>% 
+  gather("variable", "value", -x, -y) %>%
+  group_by(x, y) %>%
+  mutate(date = rep(as_date(terra::time(test_r)))) %>%
   separate(variable, c("variable", "t"), sep = "_(?=\\d)") %>%
-  select(-t) %>% 
-  separate(variable, c("variable", "expver"), sep = "_expver=") %>% 
-  group_by(x,y, date, variable) %>% 
-  summarise(value = mean(value, na.rm = TRUE), .groups = 'drop') %>% 
-  spread(variable, value) %>% 
+  select(-t) %>%
+  separate(variable, c("variable", "expver"), sep = "_expver=") %>%
+  group_by(x, y, date, variable) %>%
+  summarise(value = mean(value, na.rm = TRUE), .groups = "drop") %>%
+  spread(variable, value) %>%
   arrange(date)
 
 ## -----------------------------------------------------------------------------
@@ -118,31 +127,40 @@ ggplot(test, aes(date, tp)) +
   geom_point() +
   geom_smooth() +
   theme_bw() +
-  xlab("") + ylab("Total precipitation")
+  xlab("") +
+  ylab("Total precipitation")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  geo_lite_sf("Réserve naturelle des nouragues, 97301, Régina") %>%
 #    leaflet() %>%
 #    addTiles() %>%
-#    addPolygons(data = getbb("French Guiana", format_out = "sf_polygon",
-#                             limit = 1)$multipolygon) %>%
+#    addPolygons(data = getbb("French Guiana",
+#      format_out = "sf_polygon",
+#      limit = 1
+#    )$multipolygon) %>%
 #    addCircleMarkers(col = "red")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  (coords <- geo_lite_sf("Réserve naturelle des nouragues, 97301, Régina") %>%
-#     st_coordinates())
+#    st_coordinates())
 
 ## ---- eval=FALSE--------------------------------------------------------------
-#  (tz <- tz_lookup_coords(lon = coords[1],
-#                                lat = coords[2], method = "accurate"))
+#  (tz <- tz_lookup_coords(
+#    lon = coords[1],
+#    lat = coords[2], method = "accurate"
+#  ))
 
 ## -----------------------------------------------------------------------------
 climate <- generate_climate(
-  x = -52.75468, 
+  x = -52.75468,
   y = 4.060414,
   tz = "America/Cayenne",
-  era5land_hour = system.file("extdata", "ERA5land_hr_Nouragues_2022.nc", package = "rcontroll"), 
-  era5land_month = system.file("extdata", "ERA5land_mth_Nouragues_2021_2022.nc", package = "rcontroll")
+  era5land_hour = system.file("extdata", "ERA5land_hr_Nouragues_2022.nc",
+    package = "rcontroll"
+  ),
+  era5land_month = system.file("extdata", "ERA5land_mth_Nouragues_2021_2022.nc",
+    package = "rcontroll"
+  )
 )
 
 ## -----------------------------------------------------------------------------
@@ -173,27 +191,36 @@ list(
 ) %>%
   bind_rows(.id = "origin") %>%
   group_by(origin) %>%
-  mutate(order = 1:12) %>% 
-  mutate(month = as.character(lubridate::month(1:12, label = T))) %>% 
+  mutate(order = 1:12) %>%
+  mutate(month = as.character(lubridate::month(1:12, label = TRUE))) %>%
   gather(variable, value, -origin, -month, -order) %>%
   mutate(variable = recode(variable,
-                           "Temperature" = "Temperature~(degree~C)",
-                           "DaytimeMeanTemperature" = "DaytimeMeanTemperature~(degree~C)",
-                           "NightTemperature" = "NightTemperature~(degree~C)",
-                           "Rainfall" = "Rainfall (cm)",
-                           "WindSpeed" = "WindSpeed (m~s^{-1})",
-                           "DaytimeMeanIrradiance" = "DaytimeMeanIrradiance~(W~m^{-2})",
-                           "MeanIrradiance" = "MeanIrradiance~(W~m^{-2})",
-                           "SaturatedVapourPressure" = "SaturatedVapourPressure (hPa)",
-                           "VapourPressure" = "VapourPressure (hPa)",
-                           "VaporPressureDeficit" = "VaporPressureDeficit (hPa)",
-                           "DayTimeVapourPressureDeficitVPDbasic" = "DayTimeVapourPressureDeficitVPDbasic (hPa)",
-                           "DaytimeMeanVapourPressureDeficit" = "DaytimeMeanVapourPressureDeficit (hPa)")) %>% 
-  ggplot(aes(x = reorder(month, order), y = value, col = origin, group = origin)) +
+    "Temperature" = "Temperature~(degree~C)",
+    "DaytimeMeanTemperature" = "DaytimeMeanTemperature~(degree~C)",
+    "NightTemperature" = "NightTemperature~(degree~C)",
+    "Rainfall" = "Rainfall (cm)",
+    "WindSpeed" = "WindSpeed (m~s^{-1})",
+    "DaytimeMeanIrradiance" = "DaytimeMeanIrradiance~(W~m^{-2})",
+    "MeanIrradiance" = "MeanIrradiance~(W~m^{-2})",
+    "SaturatedVapourPressure" = "SaturatedVapourPressure (hPa)",
+    "VapourPressure" = "VapourPressure (hPa)",
+    "VaporPressureDeficit" = "VaporPressureDeficit (hPa)",
+    "DayTimeVapourPressureDeficitVPDbasic" =
+      "DayTimeVapourPressureDeficitVPDbasic (hPa)",
+    "DaytimeMeanVapourPressureDeficit" =
+      "DaytimeMeanVapourPressureDeficit (hPa)"
+  )) %>%
+  ggplot(aes(
+    x = reorder(month, order), y = value,
+    col = origin, group = origin
+  )) +
   geom_line() +
   facet_wrap(~variable, scales = "free_y", labeller = label_parsed) +
   theme_bw() +
-  theme(axis.title = element_blank(), axis.text.x = element_text(angle = 90), legend.position = "bottom")
+  theme(
+    axis.title = element_blank(), axis.text.x = element_text(angle = 90),
+    legend.position = "bottom"
+  )
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  write_tsv(climate$daytimevar, "ERA5land_daytimevar.txt")

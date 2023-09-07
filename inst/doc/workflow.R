@@ -7,10 +7,11 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=TRUE, warning=TRUE, include=FALSE--------------------------------
-if(Sys.info()[['sysname']] == "Darwin")
+if (Sys.info()[["sysname"]] == "Darwin") {
   knitr::opts_chunk$set(
-  eval = FALSE
-)
+    eval = FALSE
+  )
+}
 
 ## ----libs---------------------------------------------------------------------
 suppressMessages(library(dplyr))
@@ -66,8 +67,10 @@ rcontroll::autoplot(sim,
 #  rcontroll::autoplot(sim, what = "spatial")
 
 ## ----fullsimG3----------------------------------------------------------------
-rcontroll::autoplot(sim, what = "distribution",
-                    variables = c("dbh", "height", "LA", "LMA"))
+rcontroll::autoplot(sim,
+  what = "distribution",
+  variables = c("dbh", "height", "LA", "LMA")
+)
 
 ## ----fullstack----------------------------------------------------------------
 sim_stack <- stack(
@@ -131,8 +134,9 @@ list(
 #    name = "dynamic",
 #    variables = "height_ct",
 #    global = update_parameters(TROLLv3_output,
-#                               nbiter = 12 * 100,
-#                               extent_visual = 100),
+#      nbiter = 12 * 100,
+#      extent_visual = 100
+#    ),
 #    species = TROLLv3_output@inputs$species,
 #    climate = TROLLv3_output@inputs$climate,
 #    daily = TROLLv3_output@inputs$daily,
