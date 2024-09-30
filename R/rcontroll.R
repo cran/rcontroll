@@ -81,6 +81,6 @@
 #'
 #' @docType package
 #' @name rcontroll
-#' @aliases rcontroll-package
+#'
 NULL
 # > NULL

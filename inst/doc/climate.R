@@ -1,4 +1,4 @@
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 knitr::opts_chunk$set(
   comment = "#>"
 )
@@ -17,7 +17,7 @@ if (Sys.info()[["sysname"]] == "Darwin") {
   )
 }
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  library(ecmwfr) # to request data from Copernicus
 #  library(osmdata) # to get bounding box from the study area
 #  library(lutz) # to get time zone
@@ -25,25 +25,24 @@ if (Sys.info()[["sysname"]] == "Darwin") {
 #  library(leaflet) # to make interactive maps
 #  library(sf) # to extract coordinates from spatial objects
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  wf_set_key(
 #    user = "******",
 #    key = "********-****-****-****-************",
 #    service = "cds"
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  getbb("French Guiana", format_out = "sf_polygon", limit = 1)$multipolygon %>%
 #    leaflet() %>%
 #    addTiles() %>%
 #    addPolygons()
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  (coords <- gsub(",", "/", getbb("French Guiana",
-#    format_out = "string", limit = 1
-#  )))
+#                                  format_out = "string", limit = 1)))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  request <- list(
 #    "dataset_short_name" = "reanalysis-era5-land-monthly-means",
 #    "format" = "netcdf",
@@ -64,7 +63,7 @@ if (Sys.info()[["sysname"]] == "Darwin") {
 #    "area" = "3.960414/-52.85468/4.160414/-52.65468"
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  ncfile <- wf_request(
 #    user = "152268",
 #    request = request,
@@ -73,7 +72,7 @@ if (Sys.info()[["sysname"]] == "Darwin") {
 #    verbose = FALSE
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  request <- list(
 #    "dataset_short_name" = "reanalysis-era5-land-monthly-means",
 #    "format" = "netcdf",
@@ -94,7 +93,7 @@ if (Sys.info()[["sysname"]] == "Darwin") {
 #    "area" = "3.960414/-52.85468/4.160414/-52.65468"
 #  )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  ncfile <- wf_request(
 #    user = "152268",
 #    request = request,
@@ -130,21 +129,20 @@ ggplot(test, aes(date, tp)) +
   xlab("") +
   ylab("Total precipitation")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  geo_lite_sf("Réserve naturelle des nouragues, 97301, Régina") %>%
 #    leaflet() %>%
 #    addTiles() %>%
 #    addPolygons(data = getbb("French Guiana",
-#      format_out = "sf_polygon",
-#      limit = 1
-#    )$multipolygon) %>%
+#                             format_out = "sf_polygon",
+#                             limit = 1)$multipolygon) %>%
 #    addCircleMarkers(col = "red")
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  (coords <- geo_lite_sf("Réserve naturelle des nouragues, 97301, Régina") %>%
-#    st_coordinates())
+#     st_coordinates())
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  (tz <- tz_lookup_coords(
 #    lon = coords[1],
 #    lat = coords[2], method = "accurate"
@@ -169,7 +167,7 @@ climate$daytimevar %>% head()
 ## -----------------------------------------------------------------------------
 climate$climatedaytime12 %>% head()
 
-## ---- fig.width=6, fig.height=3-----------------------------------------------
+## ----fig.width=6, fig.height=3------------------------------------------------
 data("TROLLv3_daytimevar")
 list(
   Nouraflux = TROLLv3_daytimevar,
@@ -183,7 +181,7 @@ list(
   facet_wrap(~variable, scales = "free_y") +
   theme_bw()
 
-## ---- fig.width=12, fig.height=6----------------------------------------------
+## ----fig.width=12, fig.height=6-----------------------------------------------
 data("TROLLv3_climatedaytime12")
 list(
   Nouraflux = TROLLv3_climatedaytime12,
@@ -222,7 +220,7 @@ list(
     legend.position = "bottom"
   )
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  write_tsv(climate$daytimevar, "ERA5land_daytimevar.txt")
 #  write_tsv(climate$climatedaytime12, "ERA5land_climatedaytime12.txt")
 

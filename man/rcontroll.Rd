@@ -3,7 +3,6 @@
 \docType{package}
 \name{rcontroll}
 \alias{rcontroll}
-\alias{rcontroll-package}
 \title{\code{rcontroll}: individual-based forest growth simulator TROLL}
 \description{
 \code{TROLL} is coded in C++ and it typically simulates hundreds of thousands of
