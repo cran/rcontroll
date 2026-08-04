@@ -7,6 +7,10 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
+if(!requireNamespace("lidR", quietly = TRUE))
+  knitr::opts_chunk$set(eval = FALSE)
+
+## -----------------------------------------------------------------------------
 suppressMessages(library(rcontroll))
 data("TROLLv3_output")
 
@@ -29,7 +33,7 @@ sim
 sim@las
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  lidR::plot(sim@las[[1]])
+# lidR::plot(sim@las[[1]])
 
 ## -----------------------------------------------------------------------------
 get_chm(sim)
@@ -68,7 +72,7 @@ sim_stack
 sim_stack@las
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  lidR::plot(sim_stack@las[[2]])
+# lidR::plot(sim_stack@las[[2]])
 
 ## -----------------------------------------------------------------------------
 get_chm(sim_stack)

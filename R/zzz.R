@@ -1,12 +1,14 @@
 #' Options
 #'
 #' `rcontroll` package global options including temporary files location and
-#' `TROLL version.
+#' `TROLL` version.
 #'
-#' @param rcontroll.tmp char. Path to temporary files folder used by [troll()]
-#'   and [stack()].
-#' @param rcontroll.troll char. `TROLL`version number accessible with
-#'   [TROLL.version()].
+#' \describe{
+#'   \item{`rcontroll.tmp`}{char. Path to temporary files folder used by
+#'   [troll()] and [stack()].}
+#'   \item{`rcontroll.troll`}{char. `TROLL` version number accessible with
+#'   [TROLL.version()].}
+#' }
 #'
 #' @name option.rcontroll
 NULL

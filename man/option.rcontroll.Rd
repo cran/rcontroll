@@ -3,14 +3,15 @@
 \name{option.rcontroll}
 \alias{option.rcontroll}
 \title{Options}
-\arguments{
-\item{rcontroll.tmp}{char. Path to temporary files folder used by \code{\link[=troll]{troll()}}
-and \code{\link[=stack]{stack()}}.}
-
-\item{rcontroll.troll}{char. \code{TROLL}version number accessible with
-\code{\link[=TROLL.version]{TROLL.version()}}.}
-}
 \description{
 \code{rcontroll} package global options including temporary files location and
-`TROLL version.
+\code{TROLL} version.
+}
+\details{
+\describe{
+\item{\code{rcontroll.tmp}}{char. Path to temporary files folder used by
+\code{\link[=troll]{troll()}} and \code{\link[=stack]{stack()}}.}
+\item{\code{rcontroll.troll}}{char. \code{TROLL} version number accessible with
+\code{\link[=TROLL.version]{TROLL.version()}}.}
+}
 }

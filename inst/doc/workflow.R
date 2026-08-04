@@ -64,7 +64,7 @@ rcontroll::autoplot(sim,
   theme(legend.position = "bottom")
 
 ## ----fullsimG2, eval=FALSE----------------------------------------------------
-#  rcontroll::autoplot(sim, what = "spatial")
+# rcontroll::autoplot(sim, what = "spatial")
 
 ## ----fullsimG3----------------------------------------------------------------
 rcontroll::autoplot(sim,
@@ -95,13 +95,13 @@ rcontroll::autoplot(sim_stack,
 )
 
 ## ----fullstackG2, eval=FALSE--------------------------------------------------
-#  rcontroll::autoplot(sim_stack, what = "spatial")
+# rcontroll::autoplot(sim_stack, what = "spatial")
 
 ## -----------------------------------------------------------------------------
 rcontroll::autoplot(TROLLv3_output, what = "temporal")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  rcontroll::autoplot(TROLLv3_output, what = "spatial", variables = "age")
+# rcontroll::autoplot(TROLLv3_output, what = "spatial", variables = "age")
 
 ## -----------------------------------------------------------------------------
 sim <- troll(
@@ -130,18 +130,18 @@ list(
   })))
 
 ## ----eval=F-------------------------------------------------------------------
-#  gifs <- autogif(
-#    name = "dynamic",
-#    variables = "height_ct",
-#    global = update_parameters(TROLLv3_output,
-#      nbiter = 12 * 100,
-#      extent_visual = 100
-#    ),
-#    species = TROLLv3_output@inputs$species,
-#    climate = TROLLv3_output@inputs$climate,
-#    daily = TROLLv3_output@inputs$daily,
-#    forest = get_forest(TROLLv3_output),
-#    verbose = FALSE
-#  )
-#  gifs$height_ct
+# gifs <- autogif(
+#   name = "dynamic",
+#   variables = "height_ct",
+#   global = update_parameters(TROLLv3_output,
+#     nbiter = 12 * 100,
+#     extent_visual = 100
+#   ),
+#   species = TROLLv3_output@inputs$species,
+#   climate = TROLLv3_output@inputs$climate,
+#   daily = TROLLv3_output@inputs$daily,
+#   forest = get_forest(TROLLv3_output),
+#   verbose = FALSE
+# )
+# gifs$height_ct
 
